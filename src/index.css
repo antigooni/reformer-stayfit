@@ -102,11 +102,6 @@ input:focus-visible {
   justify-content: center;
 }
 
-.home-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.2) 100%);
-}
 
 .home-contenuto {
   position: relative;
@@ -120,6 +115,11 @@ input:focus-visible {
 .home-logo {
   width: min(60vw, 280px);
   height: auto;
+}
+
+html.home-attiva,
+html.home-attiva body {
+  background: var(--charcoal);
 }
 
 /* ---------- Pagina 2: Prenota ---------- */
