@@ -22,9 +22,6 @@
 html,
 body {
   margin: 0;
-  min-height: 100%;
-  /* colore che si vede dietro le barre durante l'overscroll/rimbalzo */
-  background: var(--sage);
 }
 
 body {
@@ -93,25 +90,16 @@ input:focus-visible {
 
 /* ---------- Pagina 1: Home ---------- */
 .home {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-  /* taglia la parte di foto che esce dallo schermo */
-  background-color: var(--charcoal);
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--sage);
+  /* si vede se la foto manca */
+  background-size: cover;
+  background-position: center;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-/* livello foto, più grande dello schermo = effetto zoom */
-.home::before {
-  content: "";
-  position: absolute;
-  inset: -6%;
-  /* aumenta per zoomare di più, es. -10% */
-  background-image: var(--foto);
-  background-size: cover;
-  background-position: center;
 }
 
 .home-overlay {
@@ -126,7 +114,7 @@ input:focus-visible {
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  padding: calc(24px + env(safe-area-inset-top, 0px)) calc(24px + env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) calc(24px + env(safe-area-inset-left, 0px));
+  padding: 24px;
 }
 
 .home-logo {
