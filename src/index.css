@@ -94,15 +94,24 @@ input:focus-visible {
 /* ---------- Pagina 1: Home ---------- */
 .home {
   position: fixed;
-  /* ancorata al viewport, non al contenuto */
   inset: 0;
-  /* top/right/bottom/left = 0 */
-  background-color: var(--sage);
-  background-size: cover;
-  background-position: center;
+  overflow: hidden;
+  /* taglia la parte di foto che esce dallo schermo */
+  background-color: var(--charcoal);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* livello foto, più grande dello schermo = effetto zoom */
+.home::before {
+  content: "";
+  position: absolute;
+  inset: -6%;
+  /* aumenta per zoomare di più, es. -10% */
+  background-image: var(--foto);
+  background-size: cover;
+  background-position: center;
 }
 
 .home-overlay {
