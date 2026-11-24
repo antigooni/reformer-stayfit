@@ -1,111 +1,473 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Palette Stayfit */
+  --white: #ffffff;
+  --warm-white: #f9f8f6;
+  --sand: #e4e0d7;
+  --sage-light: #c5d2b5;
+  --sage: #6f8567;
+  --charcoal: #323232;
+  /* Extra */
+  --full: #d9d9d9;
+  /* card lezione piena */
+  --error: #b3261e;
+  --radius: 16px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
+html,
 body {
   margin: 0;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+body {
+  background: var(--white);
+  color: var(--charcoal);
+  /* Font di sistema: nessun file da scaricare, nessuna chiamata esterna */
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+button,
+input {
+  font: inherit;
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+  margin: 0 0 12px;
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+
+/* ---------- Pulsanti ---------- */
+.btn-primario {
+  background: var(--sage);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 14px 36px;
+  min-height: 48px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
 }
-p {
+
+.btn-primario:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.btn-largo {
+  width: 100%;
+}
+
+.btn-secondario {
+  background: none;
+  border: 0;
+  color: var(--sage);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 12px;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--sage-light);
+  outline-offset: 2px;
+}
+
+.errore {
+  color: var(--error);
+  font-size: 0.9rem;
+  margin: 0 0 12px;
+}
+
+/* ---------- Pagina 1: Home ---------- */
+.home {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--sage);
+  /* si vede se la foto manca */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+.home-contenuto {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 24px;
+}
+
+.home-logo {
+  width: min(60vw, 280px);
+  height: auto;
+}
+
+/* ---------- Pagina 2: Prenota ---------- */
+.prenota {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.prenota h1 {
+  font-size: 1.75rem;
+}
+
+.strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px 12px;
+  margin-bottom: 12px;
+  scroll-snap-type: x proximity;
+}
+
+.giorno {
+  flex: 0 0 auto;
+  width: 60px;
+  padding: 10px 0;
+  border: 1.5px solid var(--sand);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--charcoal);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  scroll-snap-align: start;
+}
+
+.giorno span {
+  font-size: 0.8rem;
+}
+
+.giorno strong {
+  font-size: 1.2rem;
+}
+
+.giorno.oggi span {
+  font-weight: 700;
+}
+
+.giorno.attivo {
+  background: var(--sage-light);
+  border-color: var(--sage);
+}
+
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--warm-white);
+  color: var(--charcoal);
+  border: 0;
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.card>span {
+  display: block;
+}
+
+.card-ora {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.card-ora span {
+  font-weight: 400;
+  margin-left: 10px;
+  font-size: 1rem;
+}
+
+.card-insegnante {
+  margin-top: 2px;
+}
+
+.card-posti {
+  margin-top: 8px;
+  color: var(--sage);
+  font-weight: 600;
+}
+
+.card.completo {
+  background: var(--full);
+}
+
+.card.completo .card-posti {
+  color: var(--charcoal);
+}
+
+.badge-completo {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: var(--charcoal);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+/* ---------- Pagina 3: Dettaglio ---------- */
+.dettaglio {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--sage-light);
+  /* si vede se la foto manca */
+  background-size: cover;
+  background-position: center;
+}
+
+.dettaglio-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0.35));
+}
+
+.dettaglio-inner {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dettaglio-testa {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.indietro {
+  margin: 16px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--charcoal);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.dettaglio-titolo {
+  padding: 0 24px 20px;
+  color: #fff;
+}
+
+.dettaglio-titolo h1 {
+  font-size: 1.9rem;
+  margin: 0 0 6px;
+}
+
+.dettaglio-titolo p {
   margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.95;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.sheet {
+  background: var(--white);
+  border-radius: 24px 24px 0 0;
+  padding: 28px 24px 32px;
+  min-height: 50vh;
+  min-height: 50dvh;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.campo {
+  margin-bottom: 16px;
+}
+
+.campo label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.input {
+  width: 100%;
+  padding: 14px;
+  border: 1.5px solid var(--sand);
+  border-radius: 12px;
+  background: var(--warm-white);
+  color: var(--charcoal);
+  font-size: 16px;
+  /* 16px evita lo zoom automatico su iPhone */
+}
+
+.telefono {
+  display: flex;
+  gap: 8px;
+}
+
+.prefisso {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-radius: 12px;
+  background: var(--sand);
+  font-weight: 600;
+}
+
+/* ---------- Pagina 4: Conferma ---------- */
+.conferma {
+  position: relative;
+  max-width: 520px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 64px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.conferma h1 {
+  font-size: 1.75rem;
+  margin-top: 16px;
+}
+
+.spunta {
+  width: 96px;
+  height: 96px;
+}
+
+.spunta-cerchio,
+.spunta-segno {
+  stroke: var(--sage);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.spunta-cerchio {
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: disegna 0.6s ease-out forwards;
+}
+
+.spunta-segno {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: disegna 0.4s ease-out 0.5s forwards;
+}
+
+@keyframes disegna {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.riepilogo {
+  width: 100%;
+  background: var(--warm-white);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 24px 0 16px;
+  text-align: left;
+}
+
+.riepilogo p {
+  margin: 6px 0;
+  font-weight: 600;
+}
+
+/* Coriandoli */
+.confetti {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pezzo {
+  position: absolute;
+  top: -16px;
+  width: 8px;
+  height: 14px;
+  border-radius: 2px;
+  animation-name: cade;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+@keyframes cade {
+  to {
+    transform: translate3d(var(--drift), 105vh, 0) rotate(var(--rot));
+  }
+}
+
+/* ---------- Popup ---------- */
+.modal-sfondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 10;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal h2 {
+  margin: 0 0 8px;
+  font-size: 1.3rem;
+}
+
+.modal p {
+  margin: 0 0 20px;
+}
+
+/* Chi disattiva le animazioni nel telefono non le vede */
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+
+  .spunta-cerchio,
+  .spunta-segno {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
 }
