@@ -6,6 +6,7 @@
   --sage-light: #c5d2b5;
   --sage: #6f8567;
   --charcoal: #323232;
+  --grey: #666666;
   /* Extra */
   --full: #d9d9d9;
   /* card lezione piena */
@@ -133,12 +134,38 @@ html.home-attiva body {
 /* ---------- Pagina 2: Prenota ---------- */
 .prenota {
   max-width: 520px;
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 auto;
-  padding: 24px 16px 48px;
+  padding: 12px 16px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.freccia {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: -10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--charcoal);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.freccia:active {
+  opacity: 0.5;
 }
 
 .prenota h1 {
-  font-size: 1.75rem;
+  font-size: clamp(1.9rem, 8vw, 2.4rem);
+  line-height: 1.15;
+  margin: 12px 0 20px;
 }
 
 .strip {
@@ -148,12 +175,22 @@ html.home-attiva body {
   padding: 4px 2px 12px;
   margin-bottom: 12px;
   scroll-snap-type: x proximity;
+  flex-shrink: 0;
+  scrollbar-width: none;
+  /* Firefox e Chrome recenti */
+  -ms-overflow-style: none;
+  /* vecchi Edge */
+}
+
+.strip::-webkit-scrollbar {
+  display: none;
+  /* Safari e Chrome più vecchi */
 }
 
 .giorno {
   flex: 0 0 auto;
-  width: 60px;
-  padding: 10px 0;
+  min-width: 60px;
+  padding: 10px 12px;
   border: 1.5px solid var(--sand);
   border-radius: 12px;
   background: var(--white);
@@ -183,17 +220,41 @@ html.home-attiva body {
   border-color: var(--sage);
 }
 
+/* Contenitore delle card: occupa lo spazio rimasto sotto le date */
+.lista {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lista .vuoto {
+  margin: auto;
+  /* centra il messaggio nello spazio libero */
+  color: var(--grey);
+  text-align: center;
+}
+
+.lista .vuoto.errore {
+  color: var(--error);
+}
+
 .card {
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
+  min-height: 140px;
+  /* per i browser che non conoscono dvh */
+  min-height: clamp(120px, 19dvh, 180px);
   text-align: left;
-  background: var(--warm-white);
+  background: var(--sand);
   color: var(--charcoal);
   border: 0;
   border-radius: var(--radius);
-  padding: 16px;
-  margin-bottom: 12px;
+  padding: 16px 84px 16px 20px;
+  /* spazio a destra per il cerchio */
   cursor: pointer;
 }
 
@@ -202,38 +263,48 @@ html.home-attiva body {
 }
 
 .card-ora {
-  font-size: 1.2rem;
+  font-size: 2.2rem;
   font-weight: 700;
+  line-height: 1.1;
 }
 
 .card-ora span {
+  font-size: 0.95rem;
   font-weight: 400;
+  color: var(--grey);
   margin-left: 10px;
-  font-size: 1rem;
 }
 
 .card-insegnante {
-  margin-top: 2px;
+  margin-top: 4px;
+  color: var(--grey);
 }
 
-.card-posti {
-  margin-top: 8px;
-  color: var(--sage);
-  font-weight: 600;
+/* Cerchio con i posti (lezione libera) */
+.card>.posti {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sage);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .card.completo {
   background: var(--full);
 }
 
-.card.completo .card-posti {
-  color: var(--charcoal);
-}
-
 .badge-completo {
   position: absolute;
-  top: 14px;
-  right: 14px;
+  top: 16px;
+  right: 16px;
   background: var(--charcoal);
   color: #fff;
   font-size: 0.8rem;
@@ -241,6 +312,21 @@ html.home-attiva body {
   letter-spacing: 0.08em;
   padding: 6px 12px;
   border-radius: 999px;
+}
+
+/* Animazione di entrata (la stessa della home) */
+.prenota>.freccia,
+.prenota>h1 {
+  animation: sale-dal-basso 0.9s ease-out 0.1s both;
+}
+
+.strip {
+  animation: sale-dal-basso 0.9s ease-out 0.3s both;
+}
+
+.card,
+.lista .vuoto {
+  animation: sale-dal-basso 0.9s ease-out 0.45s both;
 }
 
 /* ---------- Pagina 3: Dettaglio ---------- */
@@ -447,6 +533,7 @@ html.home-attiva body {
   justify-content: center;
   padding: 24px;
   z-index: 10;
+  animation: compare 0.3s ease-out both;
 }
 
 .modal {
@@ -456,39 +543,30 @@ html.home-attiva body {
   max-width: 400px;
   width: 100%;
   text-align: center;
+  animation: sale-dal-basso 0.4s ease-out both;
 }
 
 .modal h2 {
   margin: 0 0 8px;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
 }
 
 .modal p {
   margin: 0 0 20px;
+  color: var(--grey);
 }
 
-/* Chi disattiva le animazioni nel telefono non le vede */
-@media (prefers-reduced-motion: reduce) {
-  .confetti {
-    display: none;
+@keyframes compare {
+  from {
+    opacity: 0;
   }
 
-  .spunta-cerchio,
-  .spunta-segno {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-
-  .home-logo,
-  .home .btn-primario {
-    animation: none;
+  to {
     opacity: 1;
   }
-
-  .onda {
-    display: none;
-  }
 }
+
+
 
 @keyframes sale-dal-basso {
   from {
@@ -536,5 +614,34 @@ html.home-attiva body {
   to {
     transform: scale(1);
     opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+
+  .spunta-cerchio,
+  .spunta-segno {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .home-logo,
+  .home .btn-primario,
+  .prenota>.freccia,
+  .prenota>h1,
+  .strip,
+  .card,
+  .lista .vuoto,
+  .modal,
+  .modal-sfondo {
+    animation: none;
+    opacity: 1;
+  }
+
+  .onda {
+    display: none;
   }
 }
