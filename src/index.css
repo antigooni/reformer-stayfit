@@ -203,7 +203,7 @@ html.home-attiva body {
   padding: 10px 12px;
   border: 1.5px solid var(--sand);
   border-radius: 14px;
-  background: var(#ffffff);
+  background: #ffffff;
   color: var(--ink);
   cursor: pointer;
   display: flex;
