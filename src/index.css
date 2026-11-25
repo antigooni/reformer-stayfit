@@ -93,7 +93,7 @@ input:focus-visible {
   position: relative;
   min-height: 100vh;
   min-height: 100dvh;
-  background-color: var(--sage);
+  background-color: #1c1c1c;
   /* si vede se la foto manca */
   background-size: cover;
   background-position: center;
@@ -119,7 +119,7 @@ input:focus-visible {
 
 html.home-attiva,
 html.home-attiva body {
-  background:#1c1c1c;
+  background: #1c1c1c;
 }
 
 /* ---------- Pagina 2: Prenota ---------- */
@@ -470,4 +470,38 @@ html.home-attiva body {
     animation: none;
     stroke-dashoffset: 0;
   }
+
+  .home-logo,
+  .home .btn-primario {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+@keyframes sale-dal-basso {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-logo,
+.home .btn-primario {
+  opacity: 0;
+  /* evita il lampo prima che parta l'animazione */
+  animation: sale-dal-basso 0.9s ease-out forwards;
+}
+
+.home-logo {
+  animation-delay: 0.2s;
+}
+
+.home .btn-primario {
+  animation-delay: 0.5s;
+  /* il bottone arriva dopo il logo */
 }
