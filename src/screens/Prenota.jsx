@@ -73,10 +73,10 @@ export default function Prenota({ giornoScelto, onCambiaGiorno, onSeleziona, onI
                             onClick={() => (completo ? setPopupCompleto(true) : onSeleziona(l))}
                         >
                             {completo ? (
-                                <span className="badge-completo">COMPLETO</span>
+                                <span className="badge badge-completo">COMPLETO</span>
                             ) : (
                                 <span
-                                    className="posti"
+                                    className="badge badge-posti"
                                     role="img"
                                     aria-label={`${l.posti_liberi} posti liberi su ${l.capienza}`}
                                 >

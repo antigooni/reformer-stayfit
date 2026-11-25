@@ -1,6 +1,7 @@
 :root {
   /* Palette Stayfit */
-  --white: #ffffff;
+  --white: #eeefee;
+  /* verdino chiarissimo per lo sfondo*/
   --warm-white: #f9f8f6;
   --sand: #e4e0d7;
   --sage-light: #c5d2b5;
@@ -9,6 +10,13 @@
   --grey: #666666;
   /* Extra */
   --full: #d9d9d9;
+  --sand-light: #ffffff;
+  /*bisanco */
+  --ink: #2a3328;
+  /* titoli e orari: antracite verdastro */
+  --sage-dark: #55694f;
+  /* pulsante principale */
+  --shadow: 0 8px 24px rgba(50, 60, 45, 0.08);
   /* card lezione piena */
   --error: #b3261e;
   --radius: 16px;
@@ -153,7 +161,7 @@ html.home-attiva body {
   padding: 0;
   border: 0;
   background: none;
-  color: var(--charcoal);
+  color: var(--ink);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
@@ -162,29 +170,31 @@ html.home-attiva body {
   opacity: 0.5;
 }
 
+/* Titolo vicino alle date */
 .prenota h1 {
   font-size: clamp(1.9rem, 8vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
   line-height: 1.15;
-  margin: 12px 0 20px;
+  color: var(--ink);
+  margin: 12px 0 6px;
 }
 
+/* Striscia dei giorni, con più spazio sotto che sopra */
 .strip {
   display: flex;
   gap: 8px;
   overflow-x: auto;
   padding: 4px 2px 12px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
   scroll-snap-type: x proximity;
   flex-shrink: 0;
   scrollbar-width: none;
-  /* Firefox e Chrome recenti */
   -ms-overflow-style: none;
-  /* vecchi Edge */
 }
 
 .strip::-webkit-scrollbar {
   display: none;
-  /* Safari e Chrome più vecchi */
 }
 
 .giorno {
@@ -192,15 +202,16 @@ html.home-attiva body {
   min-width: 60px;
   padding: 10px 12px;
   border: 1.5px solid var(--sand);
-  border-radius: 12px;
-  background: var(--white);
-  color: var(--charcoal);
+  border-radius: 14px;
+  background: var(#ffffff);
+  color: var(--ink);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
   scroll-snap-align: start;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .giorno span {
@@ -211,16 +222,21 @@ html.home-attiva body {
   font-size: 1.2rem;
 }
 
+.giorno.oggi {
+  border-color: var(--sage);
+}
+
 .giorno.oggi span {
   font-weight: 700;
 }
 
 .giorno.attivo {
-  background: var(--sage-light);
+  background: var(--sage);
   border-color: var(--sage);
+  color: #fff;
 }
 
-/* Contenitore delle card: occupa lo spazio rimasto sotto le date */
+/* Contenitore delle card */
 .lista {
   flex: 1;
   display: flex;
@@ -230,7 +246,6 @@ html.home-attiva body {
 
 .lista .vuoto {
   margin: auto;
-  /* centra il messaggio nello spazio libero */
   color: var(--grey);
   text-align: center;
 }
@@ -246,15 +261,14 @@ html.home-attiva body {
   justify-content: center;
   width: 100%;
   min-height: 140px;
-  /* per i browser che non conoscono dvh */
   min-height: clamp(120px, 19dvh, 180px);
   text-align: left;
-  background: var(--sand);
-  color: var(--charcoal);
+  background: var(--sand-light);
+  color: var(--ink);
   border: 0;
-  border-radius: var(--radius);
-  padding: 16px 84px 16px 20px;
-  /* spazio a destra per il cerchio */
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 16px 20px;
   cursor: pointer;
 }
 
@@ -262,17 +276,22 @@ html.home-attiva body {
   display: block;
 }
 
-.card-ora {
+/* Orario e durata sulla stessa linea di base */
+.card>.card-ora {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
   font-size: 2.2rem;
   font-weight: 700;
   line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  /* le cifre hanno tutte la stessa larghezza */
 }
 
 .card-ora span {
   font-size: 0.95rem;
   font-weight: 400;
   color: var(--grey);
-  margin-left: 10px;
 }
 
 .card-insegnante {
@@ -280,53 +299,60 @@ html.home-attiva body {
   color: var(--grey);
 }
 
-/* Cerchio con i posti (lezione libera) */
-.card>.posti {
+/* Badge in alto a destra: stessa forma per posti e COMPLETO */
+.card>.badge {
   position: absolute;
   top: 16px;
   right: 16px;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--sage);
-  color: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
   font-weight: 700;
-  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: #fff;
+}
+
+.badge-posti {
+  background: var(--sage);
+}
+
+.badge-completo {
+  background: var(--charcoal);
 }
 
 .card.completo {
   background: var(--full);
-}
-
-.badge-completo {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: var(--charcoal);
-  color: #fff;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 6px 12px;
-  border-radius: 999px;
+  box-shadow: none;
 }
 
 /* Animazione di entrata (la stessa della home) */
 .prenota>.freccia,
 .prenota>h1 {
-  animation: sale-dal-basso 0.9s ease-out 0.1s both;
+  animation: sale-dal-basso 0.5s ease-out 0.1s both;
 }
 
 .strip {
-  animation: sale-dal-basso 0.9s ease-out 0.3s both;
+  animation: sale-dal-basso 0.5s ease-out 0.2s both;
 }
 
 .card,
 .lista .vuoto {
-  animation: sale-dal-basso 0.9s ease-out 0.45s both;
+  animation: sale-dal-basso 0.5s ease-out 0.3s both;
+}
+
+/* Animazione di entrata (la stessa della home) */
+.prenota>.freccia,
+.prenota>h1 {
+  animation: sale-dal-basso 0.5s ease-out 0.1s both;
+}
+
+.strip {
+  animation: sale-dal-basso 0.5s ease-out 0.2s both;
+}
+
+.card,
+.lista .vuoto {
+  animation: sale-dal-basso 0.5s ease-out 0.3s both;
 }
 
 /* ---------- Pagina 3: Dettaglio ---------- */
@@ -334,10 +360,11 @@ html.home-attiva body {
   position: relative;
   min-height: 100vh;
   min-height: 100dvh;
-  background-color: var(--sage-light);
+  background-color: var(--white);
   /* si vede se la foto manca */
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 }
 
 .dettaglio-overlay {
@@ -432,6 +459,22 @@ html.home-attiva body {
   border-radius: 12px;
   background: var(--sand);
   font-weight: 600;
+}
+
+/* Animazione di entrata (la stessa della pagina Prenota) */
+.dettaglio .indietro,
+.dettaglio-titolo {
+  animation: sale-dal-basso 0.5s ease-out 0.1s both;
+}
+
+.sheet {
+  animation: sale-dal-basso 0.5s ease-out 0.2s both;
+}
+
+.sheet .campo,
+.sheet .errore,
+.sheet .btn-primario {
+  animation: sale-dal-basso 0.5s ease-out 0.3s both;
 }
 
 /* ---------- Pagina 4: Conferma ---------- */
@@ -636,6 +679,12 @@ html.home-attiva body {
   .card,
   .lista .vuoto,
   .modal,
+  .dettaglio .indietro,
+  .dettaglio-titolo,
+  .sheet,
+  .sheet .campo,
+  .sheet .errore,
+  .sheet .btn-primario,
   .modal-sfondo {
     animation: none;
     opacity: 1;
@@ -644,4 +693,8 @@ html.home-attiva body {
   .onda {
     display: none;
   }
+}
+
+.strip .giorno:not(.attivo) {
+  background: #f7f7f7;
 }
