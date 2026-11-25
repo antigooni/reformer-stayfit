@@ -119,7 +119,7 @@ input:focus-visible {
 
 html.home-attiva,
 html.home-attiva body {
-  background: var(#1c1c1c);
+  background:#1c1c1c;
 }
 
 /* ---------- Pagina 2: Prenota ---------- */
