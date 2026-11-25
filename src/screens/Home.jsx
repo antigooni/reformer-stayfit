@@ -4,7 +4,7 @@ import { LOGO, FOTO_HOME, NOME_STUDIO } from '../config'
 export default function Home({ onPrenota }) {
     useEffect(() => {
         const meta = document.querySelector('meta[name="theme-color"]')
-        meta?.setAttribute('content', '--charcoal')
+        meta?.setAttribute('content', '#1c1c1c')
         document.documentElement.classList.add('home-attiva')
 
         return () => {
