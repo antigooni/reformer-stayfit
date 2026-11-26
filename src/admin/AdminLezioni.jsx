@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { adminGetLezioni } from '../api'
 import { giorniDaOggi, toISODate, nomeGiornoBreve, oraBreve } from '../dateUtils'
 import MenuPuntini from './MenuPuntini'
+import BottomSheet from '../components/BottomSheet'
 
 // Una lezione è passata se è di un giorno precedente, oppure di oggi con orario già trascorso
 function isPassata(l) {
@@ -19,6 +20,7 @@ export default function AdminLezioni({ nome, giornoScelto, onCambiaGiorno, onInd
     const [lezioni, setLezioni] = useState([])
     const [caricamento, setCaricamento] = useState(true)
     const [errore, setErrore] = useState('')
+    const [nuovaAperta, setNuovaAperta] = useState(false)
 
     useEffect(() => {
         adminGetLezioni(toISODate(giorni[0]), toISODate(giorni[giorni.length - 1]))
@@ -126,8 +128,15 @@ export default function AdminLezioni({ nome, giornoScelto, onCambiaGiorno, onInd
                 })}
             </div>
 
-            {/* Per ora non fa niente: lo colleghiamo al passo "Nuova lezione" */}
-            <button className="btn-primario btn-largo btn-nuova">Nuova lezione</button>
+            <button className="btn-primario btn-largo btn-nuova" onClick={() => setNuovaAperta(true)}>
+                Nuova lezione
+            </button>
+
+            {nuovaAperta && (
+                <BottomSheet titolo="Crea nuova lezione" onChiudi={() => setNuovaAperta(false)}>
+                    <p style={{ color: 'var(--grey)' }}>Qui arriverà il modulo.</p>
+                </BottomSheet>
+            )}
         </main>
     )
 }

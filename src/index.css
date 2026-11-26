@@ -562,7 +562,7 @@ html.home-attiva body {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  z-index: 10;
+  z-index: 30;
   animation: compare 0.3s ease-out both;
 }
 
@@ -752,6 +752,56 @@ html.home-attiva body {
   background: var(--warm-white);
 }
 
+/* ---------- Pannello inferiore (bottom sheet) ---------- */
+.pannello-sfondo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 20;
+  animation: compare 0.3s ease-out both;
+}
+
+.pannello {
+  width: 100%;
+  max-width: 520px;
+  min-height: 50vh;
+  min-height: 50dvh;
+  max-height: 90vh;
+  max-height: 90dvh;
+  overflow-y: auto;
+  background: var(--white);
+  border-radius: 24px 24px 0 0;
+  padding: 12px 24px calc(28px + env(safe-area-inset-bottom));
+  animation: pannello-sale 0.35s ease-out both;
+}
+
+.pannello-maniglia {
+  width: 40px;
+  height: 4px;
+  margin: 0 auto 16px;
+  border-radius: 999px;
+  background: var(--sand);
+}
+
+.pannello h2 {
+  margin: 0 0 16px;
+  font-size: 1.6rem;
+  color: var(--ink);
+}
+
+@keyframes pannello-sale {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .confetti {
     display: none;
@@ -781,6 +831,8 @@ html.home-attiva body {
   .benvenuta,
   .btn-nuova,
   .menu-lista,
+  .pannello,
+  .pannello-sfondo,
   .modal-sfondo {
     animation: none;
     opacity: 1;
