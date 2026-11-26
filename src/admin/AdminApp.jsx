@@ -132,6 +132,7 @@ export default function AdminApp() {
                     setLezioneAperta((l) => ({ ...l, data_lezione: data, ora: ora + ':00' }))
                     setGiornoScelto(data)
                 }}
+                onAnnullata={() => setSchermata('lezioni')}
             />
         )
     }

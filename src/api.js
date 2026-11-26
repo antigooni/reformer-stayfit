@@ -86,3 +86,50 @@ export async function adminModificaLezione(lezioneId, nuovaData, nuovaOra) {
     }
     return Array.isArray(data) ? data[0] : data
 }
+
+// Aggiunge una prenotazione a mano. Restituisce sempre { successo, codice, messaggio, prenotazione_id }
+export async function adminAggiungiPrenotazione(lezioneId, nome, telefono) {
+    const { data, error } = await supabase.rpc('admin_aggiungi_prenotazione', {
+        p_lezione_id: lezioneId,
+        p_nome: nome,
+        p_telefono: telefono,
+    })
+    if (error) {
+        return {
+            successo: false,
+            codice: 'ERRORE_RETE',
+            messaggio: 'Connessione non riuscita. Riprova.',
+        }
+    }
+    return Array.isArray(data) ? data[0] : data
+}
+
+// Annulla una prenotazione. Restituisce sempre { successo, codice, messaggio }
+export async function adminAnnullaPrenotazione(prenotazioneId) {
+    const { data, error } = await supabase.rpc('admin_annulla_prenotazione', {
+        p_prenotazione_id: prenotazioneId,
+    })
+    if (error) {
+        return {
+            successo: false,
+            codice: 'ERRORE_RETE',
+            messaggio: 'Connessione non riuscita. Riprova.',
+        }
+    }
+    return Array.isArray(data) ? data[0] : data
+}
+
+// Annulla una lezione e le sue prenotazioni. Restituisce sempre { successo, codice, messaggio }
+export async function adminAnnullaLezione(lezioneId) {
+    const { data, error } = await supabase.rpc('admin_annulla_lezione', {
+        p_lezione_id: lezioneId,
+    })
+    if (error) {
+        return {
+            successo: false,
+            codice: 'ERRORE_RETE',
+            messaggio: 'Connessione non riuscita. Riprova.',
+        }
+    }
+    return Array.isArray(data) ? data[0] : data
+}
