@@ -659,6 +659,8 @@ html.home-attiva body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 10;
 }
 
 .admin-testa .freccia {
@@ -692,6 +694,64 @@ html.home-attiva body {
   animation: sale-dal-basso 0.5s ease-out 0.3s both;
 }
 
+/* ---------- Menu a tre puntini ---------- */
+.menu {
+  position: relative;
+}
+
+.menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-btn:active {
+  opacity: 0.5;
+}
+
+.menu-lista {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 5;
+  min-width: 180px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(50, 60, 45, 0.18);
+  overflow: hidden;
+  animation: compare 0.15s ease-out both;
+}
+
+.menu-voce {
+  display: block;
+  width: 100%;
+  padding: 14px 18px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu-voce+.menu-voce {
+  border-top: 1px solid var(--sand);
+}
+
+.menu-voce:active {
+  background: var(--warm-white);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .confetti {
     display: none;
@@ -720,6 +780,7 @@ html.home-attiva body {
   .admin-testa,
   .benvenuta,
   .btn-nuova,
+  .menu-lista,
   .modal-sfondo {
     animation: none;
     opacity: 1;

@@ -94,6 +94,33 @@ export default function AdminApp() {
         )
     }
 
+        if (schermata === 'statistiche') {
+        return (
+            <main className="prenota">
+                <button
+                    className="freccia"
+                    onClick={() => setSchermata('lezioni')}
+                    aria-label="Torna alle lezioni"
+                >
+                    <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                        <path
+                            d="M19 12H5M12 19l-7-7 7-7"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                </button>
+                <h1>Statistiche</h1>
+                <div className="lista">
+                    <p className="vuoto">In arrivo.</p>
+                </div>
+            </main>
+        )
+    }
+
     return (
         <AdminLezioni
             nome={nomeSaluto(profilo)}
@@ -101,6 +128,8 @@ export default function AdminApp() {
             onCambiaGiorno={setGiornoScelto}
             onIndietro={() => setSchermata('home')}
             onEsci={esci}
+            onStatistiche={() => setSchermata('statistiche')}
         />
     )
+
 }

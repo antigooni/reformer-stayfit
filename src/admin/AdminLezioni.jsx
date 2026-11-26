@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { adminGetLezioni } from '../api'
 import { giorniDaOggi, toISODate, nomeGiornoBreve, oraBreve } from '../dateUtils'
+import MenuPuntini from './MenuPuntini'
 
 // Una lezione è passata se è di un giorno precedente, oppure di oggi con orario già trascorso
 function isPassata(l) {
@@ -13,7 +14,7 @@ function isPassata(l) {
     return oraBreve(l.ora) <= `${hh}:${mm}`
 }
 
-export default function AdminLezioni({ nome, giornoScelto, onCambiaGiorno, onIndietro, onEsci }) {
+export default function AdminLezioni({ nome, giornoScelto, onCambiaGiorno, onIndietro, onEsci, onStatistiche }) {
     const [giorni] = useState(() => giorniDaOggi(15)) // oggi + 14 giorni
     const [lezioni, setLezioni] = useState([])
     const [caricamento, setCaricamento] = useState(true)
@@ -48,8 +49,12 @@ export default function AdminLezioni({ nome, giornoScelto, onCambiaGiorno, onInd
                         />
                     </svg>
                 </button>
-                {/* PROVVISORIO: nel prossimo passo diventa il menu dei tre puntini */}
-                <button className="btn-secondario" onClick={onEsci}>Esci</button>
+                <MenuPuntini
+                    voci={[
+                        { etichetta: 'Statistiche', onClick: onStatistiche },
+                        { etichetta: 'Esci', onClick: onEsci },
+                    ]}
+                />
             </div>
 
             <p className="benvenuta">Benvenuta, {nome}!</p>
