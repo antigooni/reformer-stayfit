@@ -4,6 +4,7 @@ import { giorniDaOggi, toISODate, nomeGiornoBreve, oraBreve } from '../dateUtils
 import MenuPuntini from './MenuPuntini'
 import BottomSheet from '../components/BottomSheet'
 import NuovaLezione from './NuovaLezione'
+import { statoNotifiche, attivaNotifiche, disattivaNotifiche } from './notifiche'
 
 // Una lezione è passata se è di un giorno precedente, oppure di oggi con orario già trascorso
 function isPassata(l) {
@@ -23,6 +24,18 @@ export default function AdminLezioni({ nome, ruolo, giornoScelto, onCambiaGiorno
     const [errore, setErrore] = useState('')
     const [nuovaAperta, setNuovaAperta] = useState(false)
     const [versione, setVersione] = useState(0)
+    const [statoNotif, setStatoNotif] = useState('spente')
+
+    useEffect(() => {
+        statoNotifiche().then(setStatoNotif)
+    }, [])
+
+    async function cambiaNotifiche() {
+        const risultato =
+            statoNotif === 'attive' ? await disattivaNotifiche() : await attivaNotifiche()
+        alert(risultato.messaggio)
+        setStatoNotif(await statoNotifiche())
+    }
 
     useEffect(() => {
         adminGetLezioni(toISODate(giorni[0]), toISODate(giorni[giorni.length - 1]))
@@ -55,6 +68,10 @@ export default function AdminLezioni({ nome, ruolo, giornoScelto, onCambiaGiorno
                 </button>
                 <MenuPuntini
                     voci={[
+                        {
+                            etichetta: statoNotif === 'attive' ? 'Disattiva notifiche' : 'Attiva notifiche',
+                            onClick: cambiaNotifiche,
+                        },
                         { etichetta: 'Statistiche', onClick: onStatistiche },
                         { etichetta: 'Esci', onClick: onEsci },
                     ]}
