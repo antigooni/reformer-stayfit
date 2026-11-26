@@ -26,3 +26,10 @@ export async function prenotaLezione(lezioneId, nome, telefono) {
     }
     return Array.isArray(data) ? data[0] : data
 }
+
+// Profilo dell'utente loggato: { ruolo, insegnante_id }, oppure null se non ha un profilo admin
+export async function getMioProfilo() {
+    const { data, error } = await supabase.rpc('get_mio_profilo_admin')
+    if (error) throw new Error('Impossibile leggere il profilo')
+    return Array.isArray(data) ? (data[0] ?? null) : data
+}
