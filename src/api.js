@@ -69,3 +69,20 @@ export async function adminGetPrenotazioni(lezioneId) {
     if (error) throw new Error('Impossibile caricare le prenotazioni')
     return data
 }
+
+// Sposta una lezione. Restituisce sempre { successo, codice, messaggio }
+export async function adminModificaLezione(lezioneId, nuovaData, nuovaOra) {
+    const { data, error } = await supabase.rpc('admin_modifica_lezione', {
+        p_lezione_id: lezioneId,
+        p_nuova_data: nuovaData,
+        p_nuova_ora: nuovaOra,
+    })
+    if (error) {
+        return {
+            successo: false,
+            codice: 'ERRORE_RETE',
+            messaggio: 'Connessione non riuscita. Riprova.',
+        }
+    }
+    return Array.isArray(data) ? data[0] : data
+}

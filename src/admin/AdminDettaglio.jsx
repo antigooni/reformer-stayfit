@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { adminGetPrenotazioni } from '../api'
 import { FOTO_LEZIONE } from '../config'
-import { dataEstesa, oraBreve } from '../dateUtils'
+import { dataEstesa, oraBreve, giorniDaOggi, toISODate, lezionePassata } from '../dateUtils'
+import ModificaLezione from './ModificaLezione'
 import BottomSheet from '../components/BottomSheet'
 import { copiaTesto } from '../clipboard'
 
@@ -10,12 +11,13 @@ function formattaTelefono(t) {
     return t.length === 10 ? `${t.slice(0, 3)} ${t.slice(3, 6)} ${t.slice(6)}` : t
 }
 
-export default function AdminDettaglio({ lezione, onIndietro }) {
+export default function AdminDettaglio({ lezione, onIndietro, onModificata }) {
     const [prenotazioni, setPrenotazioni] = useState([])
     const [caricamento, setCaricamento] = useState(true)
     const [errore, setErrore] = useState('')
     const [selezionata, setSelezionata] = useState(null)
     const [esitoCopia, setEsitoCopia] = useState(null) // null | 'ok' | 'errore'
+    const [modificaAperta, setModificaAperta] = useState(false)
 
     useEffect(() => {
         adminGetPrenotazioni(lezione.id)
@@ -28,6 +30,8 @@ export default function AdminDettaglio({ lezione, onIndietro }) {
 
     // Finché i dati non arrivano uso il numero che già conosco dalla lista delle lezioni
     const occupati = caricamento || errore ? lezione.prenotazioni_confermate : prenotazioni.length
+    const passata = lezionePassata(lezione.data_lezione, lezione.ora)
+    const dataMax = toISODate(giorniDaOggi(15)[14])
 
     function apri(p) {
         setEsitoCopia(null)
@@ -77,37 +81,28 @@ export default function AdminDettaglio({ lezione, onIndietro }) {
 
                     {/* Per ora i tre pulsanti non fanno niente: li colleghiamo nei prossimi passi */}
                     <div className="azioni">
-                        <button className="btn-primario">Modifica lezione</button>
+                        <button className="btn-primario" disabled={passata} onClick={() => setModificaAperta(true)}>
+                            Modifica lezione
+                        </button>
                         <button className="btn-primario">Aggiungi prenotazione</button>
                         <button className="btn-pericolo">Cancella lezione</button>
                     </div>
                 </div>
             </div>
 
-            {selezionata && (
-                <BottomSheet titolo={selezionata.nome} onChiudi={() => setSelezionata(null)}>
-                    <button
-                        className="pannello-telefono"
-                        onClick={copia}
-                        aria-label="Copia il numero di telefono"
-                    >
-                        +39 {formattaTelefono(selezionata.telefono)}
-                    </button>
-                    <p className={'pannello-hint' + (esitoCopia === 'ok' ? ' ok' : '')} role="status">
-                        {esitoCopia === 'ok' && 'Numero copiato!'}
-                        {esitoCopia === 'errore' && 'Copia non riuscita.'}
-                        {esitoCopia === null && 'Tocca il numero per copiarlo'}
-                    </p>
-
-                    {/* "Cancella prenotazione" lo colleghiamo al passo 10 */}
-                    <div className="pannello-azioni">
-                        <button className="btn-rosso">Cancella prenotazione</button>
-                        <button className="btn-primario" onClick={() => setSelezionata(null)}>
-                            OK
-                        </button>
-                    </div>
-                </BottomSheet>
-            )}
+            {modificaAperta && (
+    <BottomSheet titolo="Modifica lezione" onChiudi={() => setModificaAperta(false)}>
+        <ModificaLezione
+            lezione={lezione}
+            dataMax={dataMax}
+            prenotate={occupati}
+            onModificata={(d, o) => {
+                setModificaAperta(false)
+                onModificata(d, o)
+            }}
+        />
+    </BottomSheet>
+)}
         </main>
     )
 }

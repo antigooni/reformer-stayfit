@@ -970,6 +970,23 @@ select.input {
   padding: 12px 24px;
 }
 
+/* Popup di conferma con due pulsanti */
+.modal-azioni {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-azioni .btn-primario {
+  min-width: 120px;
+  padding: 12px 24px;
+}
+
+.azioni .btn-primario:disabled {
+  cursor: not-allowed;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .confetti {
     display: none;

@@ -39,3 +39,14 @@ export function dataEstesa(iso) {
 export function oraBreve(ora) {
     return ora.slice(0, 5)
 }
+
+// Vera se la lezione (data AAAA-MM-GG, ora "HH:MM" o "HH:MM:SS") è già iniziata
+export function lezionePassata(dataISO, ora) {
+    const adesso = new Date()
+    const oggi = toISODate(adesso)
+    if (dataISO < oggi) return true
+    if (dataISO > oggi) return false
+    const hh = String(adesso.getHours()).padStart(2, '0')
+    const mm = String(adesso.getMinutes()).padStart(2, '0')
+    return oraBreve(ora) <= `${hh}:${mm}`
+}

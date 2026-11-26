@@ -128,6 +128,10 @@ export default function AdminApp() {
             <AdminDettaglio
                 lezione={lezioneAperta}
                 onIndietro={() => setSchermata('lezioni')}
+                onModificata={(data, ora) => {
+                    setLezioneAperta((l) => ({ ...l, data_lezione: data, ora: ora + ':00' }))
+                    setGiornoScelto(data)
+                }}
             />
         )
     }
