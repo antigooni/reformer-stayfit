@@ -19,7 +19,7 @@ export default function Home({ onPrenota }) {
             <div className="home-overlay" />
             <div className="home-contenuto">
                 <img className="home-logo" src={LOGO} alt={NOME_STUDIO} />
-                <button className="btn-primario" onPointerDown={creaOnda}onClick={onPrenota}>
+                <button className="btn-primario" onPointerDown={creaOnda} onClick={onPrenota}>
                     Prenota ora
                 </button>
             </div>

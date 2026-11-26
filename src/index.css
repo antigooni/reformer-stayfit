@@ -325,20 +325,7 @@ html.home-attiva body {
   box-shadow: none;
 }
 
-/* Animazione di entrata (la stessa della home) */
-.prenota>.freccia,
-.prenota>h1 {
-  animation: sale-dal-basso 0.5s ease-out 0.1s both;
-}
 
-.strip {
-  animation: sale-dal-basso 0.5s ease-out 0.2s both;
-}
-
-.card,
-.lista .vuoto {
-  animation: sale-dal-basso 0.5s ease-out 0.3s both;
-}
 
 /* Animazione di entrata (la stessa della home) */
 .prenota>.freccia,
