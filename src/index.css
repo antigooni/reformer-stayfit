@@ -614,7 +614,7 @@ html.home-attiva body {
 .home .btn-primario {
   opacity: 0;
   /* evita il lampo prima che parta l'animazione */
-  animation: sale-dal-basso 0.9s ease-out forwards;
+  animation: sale-dal-basso 0.6s ease-out forwards;
 }
 
 .home-logo {
@@ -622,7 +622,7 @@ html.home-attiva body {
 }
 
 .home .btn-primario {
-  animation-delay: 0.5s;
+  animation-delay: 0.3s;
   /* il bottone arriva dopo il logo */
 }
 
@@ -687,11 +687,11 @@ html.home-attiva body {
 
 .admin-testa,
 .benvenuta {
-  animation: sale-dal-basso 0.5s ease-out 0.1s both;
+  animation: sale-dal-basso 0.3s ease-out 0.1s both;
 }
 
 .btn-nuova {
-  animation: sale-dal-basso 0.5s ease-out 0.3s both;
+  animation: sale-dal-basso 0.3s ease-out 0.2s both;
 }
 
 /* ---------- Menu a tre puntini ---------- */
@@ -761,7 +761,7 @@ html.home-attiva body {
   align-items: flex-end;
   justify-content: center;
   z-index: 20;
-  animation: compare 0.3s ease-out both;
+  animation: compare 0.2s ease-out both;
 }
 
 .pannello {
@@ -775,7 +775,7 @@ html.home-attiva body {
   background: var(--white);
   border-radius: 24px 24px 0 0;
   padding: 12px 24px calc(28px + env(safe-area-inset-bottom));
-  animation: pannello-sale 0.35s ease-out both;
+  animation: pannello-sale 0.2s ease-out both;
 }
 
 .pannello-maniglia {

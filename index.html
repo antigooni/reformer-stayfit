@@ -6,6 +6,15 @@
   <link rel="icon" type="image/svg+xml" href="/favicon-stayfit.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>StayFit - Prenotazioni Reformer</title>
+  <script>
+    // Il manifesto si collega solo nell'area admin, così le clienti non vedono "Installa app"
+    if (location.pathname.startsWith('/admin')) {
+      var l = document.createElement('link');
+      l.rel = 'manifest';
+      l.href = '/manifest-admin.webmanifest';
+      document.head.appendChild(l);
+    }
+  </script>
 </head>
 
 <body>
