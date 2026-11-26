@@ -647,6 +647,13 @@ html.home-attiva body {
   }
 }
 
+/* Login admin: contenuto al centro della pagina */
+.login {
+  justify-content: center;
+  padding-bottom: 12vh;
+  /* lo alza un po' sopra il centro esatto */
+}
+
 @media (prefers-reduced-motion: reduce) {
   .confetti {
     display: none;

@@ -3,6 +3,7 @@ import { supabase } from '../supabaseClient'
 import { getMioProfilo } from '../api'
 import { NOME_PROPRIETARIA, NOMI_ISTRUTTRICI } from '../config'
 import AdminLogin from './AdminLogin'
+import Home from '../screens/Home'
 
 function nomeSaluto(profilo) {
     if (profilo.ruolo === 'proprietario') return NOME_PROPRIETARIA
@@ -15,6 +16,7 @@ export default function AdminApp() {
     // Il profilo porta con sé l'id dell'utente a cui appartiene, per non mostrare dati di una sessione vecchia
     const [profilo, setProfilo] = useState(null)
     const [erroreProfilo, setErroreProfilo] = useState(null)
+    const [schermata, setSchermata] = useState('home')
 
     // Non far indicizzare la pagina admin dai motori di ricerca
     useEffect(() => {
@@ -54,6 +56,7 @@ export default function AdminApp() {
     }, [userId])
 
     async function esci() {
+        setSchermata('home')
         await supabase.auth.signOut()
     }
 
@@ -79,9 +82,30 @@ export default function AdminApp() {
         return <p className="vuoto" style={{ padding: 24 }}>Caricamento…</p>
     }
 
-    // PROVVISORIO: nei prossimi passi qui arriva la home admin
+    if (schermata === 'home') {
+        return (
+            <Home
+                testoPulsante="Gestisci le tue lezioni"
+                onPrenota={() => setSchermata('lezioni')}
+            />
+        )
+    }
+
+    // PROVVISORIO: nel prossimo passo qui arriva "Le tue lezioni"
     return (
         <main className="prenota">
+            <button className="freccia" onClick={() => setSchermata('home')} aria-label="Torna alla home">
+                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+                    <path
+                        d="M19 12H5M12 19l-7-7 7-7"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                    />
+                </svg>
+            </button>
             <h1>Benvenuta, {nomeSaluto(profilo)}!</h1>
             <p style={{ color: 'var(--grey)' }}>Ruolo: {profilo.ruolo}</p>
             <button className="btn-secondario" onClick={esci}>Esci</button>

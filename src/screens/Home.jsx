@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { LOGO, FOTO_HOME, NOME_STUDIO } from '../config'
 import { creaOnda } from '../ripple'
 
-export default function Home({ onPrenota }) {
+export default function Home({ onPrenota, testoPulsante = 'Prenota ora' }) {
     useEffect(() => {
         const meta = document.querySelector('meta[name="theme-color"]')
         meta?.setAttribute('content', '#1c1c1c')
@@ -20,7 +20,7 @@ export default function Home({ onPrenota }) {
             <div className="home-contenuto">
                 <img className="home-logo" src={LOGO} alt={NOME_STUDIO} />
                 <button className="btn-primario" onPointerDown={creaOnda} onClick={onPrenota}>
-                    Prenota ora
+                    {testoPulsante}
                 </button>
             </div>
         </main>

@@ -43,7 +43,7 @@ export default function AdminLogin() {
     }
 
     return (
-        <main className="prenota">
+        <main className="prenota login">
             <h1>Area amministrativa</h1>
             <p style={{ color: 'var(--grey)', margin: '0 0 24px' }}>
                 Accedi per gestire le lezioni.
