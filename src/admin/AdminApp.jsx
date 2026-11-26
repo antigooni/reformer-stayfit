@@ -94,7 +94,7 @@ export default function AdminApp() {
         )
     }
 
-        if (schermata === 'statistiche') {
+    if (schermata === 'statistiche') {
         return (
             <main className="prenota">
                 <button
@@ -129,6 +129,7 @@ export default function AdminApp() {
             onIndietro={() => setSchermata('home')}
             onEsci={esci}
             onStatistiche={() => setSchermata('statistiche')}
+            ruolo={profilo.ruolo}
         />
     )
 

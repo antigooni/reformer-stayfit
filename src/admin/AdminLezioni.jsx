@@ -3,6 +3,7 @@ import { adminGetLezioni } from '../api'
 import { giorniDaOggi, toISODate, nomeGiornoBreve, oraBreve } from '../dateUtils'
 import MenuPuntini from './MenuPuntini'
 import BottomSheet from '../components/BottomSheet'
+import NuovaLezione from './NuovaLezione'
 
 // Una lezione è passata se è di un giorno precedente, oppure di oggi con orario già trascorso
 function isPassata(l) {
@@ -15,12 +16,13 @@ function isPassata(l) {
     return oraBreve(l.ora) <= `${hh}:${mm}`
 }
 
-export default function AdminLezioni({ nome, giornoScelto, onCambiaGiorno, onIndietro, onEsci, onStatistiche }) {
+export default function AdminLezioni({ nome, ruolo, giornoScelto, onCambiaGiorno, onIndietro, onEsci, onStatistiche }) {
     const [giorni] = useState(() => giorniDaOggi(15)) // oggi + 14 giorni
     const [lezioni, setLezioni] = useState([])
     const [caricamento, setCaricamento] = useState(true)
     const [errore, setErrore] = useState('')
     const [nuovaAperta, setNuovaAperta] = useState(false)
+    const [versione, setVersione] = useState(0)
 
     useEffect(() => {
         adminGetLezioni(toISODate(giorni[0]), toISODate(giorni[giorni.length - 1]))
@@ -32,7 +34,7 @@ export default function AdminLezioni({ nome, giornoScelto, onCambiaGiorno, onInd
             })
             .catch((e) => setErrore(e.message))
             .finally(() => setCaricamento(false))
-    }, [giorni])
+    }, [giorni, versione])
 
     const lezioniDelGiorno = lezioni.filter((l) => l.data_lezione === giornoScelto)
 
@@ -134,7 +136,16 @@ export default function AdminLezioni({ nome, giornoScelto, onCambiaGiorno, onInd
 
             {nuovaAperta && (
                 <BottomSheet titolo="Crea nuova lezione" onChiudi={() => setNuovaAperta(false)}>
-                    <p style={{ color: 'var(--grey)' }}>Qui arriverà il modulo.</p>
+                    <NuovaLezione
+                        ruolo={ruolo}
+                        dataIniziale={giornoScelto}
+                        dataMax={toISODate(giorni[giorni.length - 1])}
+                        onCreata={(dataCreata) => {
+                            setNuovaAperta(false)
+                            onCambiaGiorno(dataCreata)
+                            setVersione((v) => v + 1)
+                        }}
+                    />
                 </BottomSheet>
             )}
         </main>

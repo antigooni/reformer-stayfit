@@ -43,3 +43,20 @@ export async function adminGetLezioni(dataInizio, dataFine) {
     if (error) throw new Error('Impossibile caricare le lezioni')
     return data
 }
+
+// Crea una lezione. Restituisce sempre { successo, codice, messaggio, lezione_id }.
+// insegnanteId serve solo alla proprietaria: per un'istruttrice il database usa il suo profilo.
+export async function adminCreaLezione(dataLezione, ora, insegnanteId) {
+    const parametri = { p_data_lezione: dataLezione, p_ora: ora }
+    if (insegnanteId) parametri.p_insegnante_id = insegnanteId
+
+    const { data, error } = await supabase.rpc('admin_crea_lezione', parametri)
+    if (error) {
+        return {
+            successo: false,
+            codice: 'ERRORE_RETE',
+            messaggio: 'Connessione non riuscita. Riprova.',
+        }
+    }
+    return Array.isArray(data) ? data[0] : data
+}
