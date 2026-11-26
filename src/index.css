@@ -654,6 +654,44 @@ html.home-attiva body {
   /* lo alza un po' sopra il centro esatto */
 }
 
+/* ---------- Area admin: Le tue lezioni ---------- */
+.admin-testa {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-testa .freccia {
+  align-self: center;
+}
+
+.benvenuta {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+  color: var(--grey);
+}
+
+.benvenuta+h1 {
+  margin-top: 2px;
+}
+
+.badge-passata {
+  background: var(--grey);
+}
+
+.btn-nuova {
+  margin-top: 16px;
+}
+
+.admin-testa,
+.benvenuta {
+  animation: sale-dal-basso 0.5s ease-out 0.1s both;
+}
+
+.btn-nuova {
+  animation: sale-dal-basso 0.5s ease-out 0.3s both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .confetti {
     display: none;
@@ -679,6 +717,9 @@ html.home-attiva body {
   .sheet .campo,
   .sheet .errore,
   .sheet .btn-primario,
+  .admin-testa,
+  .benvenuta,
+  .btn-nuova,
   .modal-sfondo {
     animation: none;
     opacity: 1;

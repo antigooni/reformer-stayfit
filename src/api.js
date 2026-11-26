@@ -33,3 +33,13 @@ export async function getMioProfilo() {
     if (error) throw new Error('Impossibile leggere il profilo')
     return Array.isArray(data) ? (data[0] ?? null) : data
 }
+
+// Lezioni visibili all'admin loggata (la proprietaria le vede tutte, un'istruttrice solo le sue)
+export async function adminGetLezioni(dataInizio, dataFine) {
+    const { data, error } = await supabase.rpc('admin_get_lezioni', {
+        p_data_inizio: dataInizio,
+        p_data_fine: dataFine,
+    })
+    if (error) throw new Error('Impossibile caricare le lezioni')
+    return data
+}

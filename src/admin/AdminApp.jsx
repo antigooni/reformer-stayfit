@@ -4,6 +4,8 @@ import { getMioProfilo } from '../api'
 import { NOME_PROPRIETARIA, NOMI_ISTRUTTRICI } from '../config'
 import AdminLogin from './AdminLogin'
 import Home from '../screens/Home'
+import AdminLezioni from './AdminLezioni'
+import { toISODate } from '../dateUtils'
 
 function nomeSaluto(profilo) {
     if (profilo.ruolo === 'proprietario') return NOME_PROPRIETARIA
@@ -17,6 +19,7 @@ export default function AdminApp() {
     const [profilo, setProfilo] = useState(null)
     const [erroreProfilo, setErroreProfilo] = useState(null)
     const [schermata, setSchermata] = useState('home')
+    const [giornoScelto, setGiornoScelto] = useState(() => toISODate(new Date()))
 
     // Non far indicizzare la pagina admin dai motori di ricerca
     useEffect(() => {
@@ -91,24 +94,13 @@ export default function AdminApp() {
         )
     }
 
-    // PROVVISORIO: nel prossimo passo qui arriva "Le tue lezioni"
     return (
-        <main className="prenota">
-            <button className="freccia" onClick={() => setSchermata('home')} aria-label="Torna alla home">
-                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
-                    <path
-                        d="M19 12H5M12 19l-7-7 7-7"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </svg>
-            </button>
-            <h1>Benvenuta, {nomeSaluto(profilo)}!</h1>
-            <p style={{ color: 'var(--grey)' }}>Ruolo: {profilo.ruolo}</p>
-            <button className="btn-secondario" onClick={esci}>Esci</button>
-        </main>
+        <AdminLezioni
+            nome={nomeSaluto(profilo)}
+            giornoScelto={giornoScelto}
+            onCambiaGiorno={setGiornoScelto}
+            onIndietro={() => setSchermata('home')}
+            onEsci={esci}
+        />
     )
 }
