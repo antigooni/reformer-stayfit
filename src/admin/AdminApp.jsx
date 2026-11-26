@@ -32,6 +32,15 @@ export default function AdminApp() {
         return () => meta.remove()
     }, [])
 
+    // Service worker: serve per le notifiche, vale solo dentro /admin
+    useEffect(() => {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+                .register('/sw-admin.js', { scope: '/admin' })
+                .catch(() => { })
+        }
+    }, [])
+
     // Sessione: lettura iniziale (dal dispositivo) e ascolto di login e logout
     useEffect(() => {
         supabase.auth.getSession().then(({ data }) => setSessione(data.session))
