@@ -16,7 +16,7 @@ function isPassata(l) {
     return oraBreve(l.ora) <= `${hh}:${mm}`
 }
 
-export default function AdminLezioni({ nome, ruolo, giornoScelto, onCambiaGiorno, onIndietro, onEsci, onStatistiche }) {
+export default function AdminLezioni({ nome, ruolo, giornoScelto, onCambiaGiorno, onIndietro, onEsci, onStatistiche, onApri }) {
     const [giorni] = useState(() => giorniDaOggi(15)) // oggi + 14 giorni
     const [lezioni, setLezioni] = useState([])
     const [caricamento, setCaricamento] = useState(true)
@@ -118,6 +118,7 @@ export default function AdminLezioni({ nome, ruolo, giornoScelto, onCambiaGiorno
                             key={l.id}
                             className={'card' + (passata || completa ? ' completo' : '')}
                             style={{ animationDelay: `${0.3 + i * 0.1}s` }}
+                            onClick={() => onApri(l)}
                         >
                             {badge}
                             <span className="card-ora">

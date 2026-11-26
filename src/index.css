@@ -826,6 +826,150 @@ select.input {
   color: var(--grey);
 }
 
+/* ---------- Area admin: dettaglio lezione ---------- */
+.dettaglio-titolo h1.ora-grande {
+  font-size: clamp(3.5rem, 18vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  margin: 0 0 8px;
+}
+
+.sheet-admin {
+  display: flex;
+  flex-direction: column;
+}
+
+.vuoto-testo {
+  margin: 24px 0;
+  text-align: center;
+  color: var(--grey);
+}
+
+.prenotati {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.prenotato {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--warm-white);
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.prenotato strong {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.prenotato span {
+  color: var(--grey);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.prenotato:active {
+  background: var(--sand);
+}
+
+/* Tre pulsanti in fondo: due affiancati, il terzo sotto a tutta larghezza */
+.azioni {
+  margin-top: auto;
+  padding-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.azioni .btn-primario {
+  padding: 12px 8px;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.btn-pericolo {
+  grid-column: 1 / -1;
+  min-height: 48px;
+  border: 1.5px solid var(--error);
+  border-radius: 999px;
+  background: none;
+  color: var(--error);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: scale 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-pericolo:active {
+  scale: 0.97;
+}
+
+/* Pannello del singolo prenotato */
+.pannello-telefono {
+  display: block;
+  width: 100%;
+  margin: 0 0 6px;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--warm-white);
+  color: var(--ink);
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pannello-hint {
+  margin: 0 0 24px;
+  min-height: 1.4em;
+  font-size: 0.9rem;
+  color: var(--grey);
+}
+
+.pannello-hint.ok {
+  color: var(--sage-dark);
+  font-weight: 600;
+}
+
+.pannello-azioni {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.btn-rosso {
+  padding: 12px 4px;
+  border: 0;
+  background: none;
+  color: var(--error);
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pannello-azioni .btn-primario {
+  min-width: 110px;
+  padding: 12px 24px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .confetti {
     display: none;

@@ -6,6 +6,7 @@ import AdminLogin from './AdminLogin'
 import Home from '../screens/Home'
 import AdminLezioni from './AdminLezioni'
 import { toISODate } from '../dateUtils'
+import AdminDettaglio from './AdminDettaglio'
 
 function nomeSaluto(profilo) {
     if (profilo.ruolo === 'proprietario') return NOME_PROPRIETARIA
@@ -20,6 +21,7 @@ export default function AdminApp() {
     const [erroreProfilo, setErroreProfilo] = useState(null)
     const [schermata, setSchermata] = useState('home')
     const [giornoScelto, setGiornoScelto] = useState(() => toISODate(new Date()))
+    const [lezioneAperta, setLezioneAperta] = useState(null)
 
     // Non far indicizzare la pagina admin dai motori di ricerca
     useEffect(() => {
@@ -121,6 +123,15 @@ export default function AdminApp() {
         )
     }
 
+    if (schermata === 'dettaglio' && lezioneAperta) {
+        return (
+            <AdminDettaglio
+                lezione={lezioneAperta}
+                onIndietro={() => setSchermata('lezioni')}
+            />
+        )
+    }
+
     return (
         <AdminLezioni
             nome={nomeSaluto(profilo)}
@@ -130,6 +141,10 @@ export default function AdminApp() {
             onEsci={esci}
             onStatistiche={() => setSchermata('statistiche')}
             ruolo={profilo.ruolo}
+            onApri={(l) => {
+                setLezioneAperta(l)
+                setSchermata('dettaglio')
+            }}
         />
     )
 

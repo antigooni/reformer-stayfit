@@ -60,3 +60,12 @@ export async function adminCreaLezione(dataLezione, ora, insegnanteId) {
     }
     return Array.isArray(data) ? data[0] : data
 }
+
+// Clienti prenotate a una lezione: [{ prenotazione_id, nome, telefono, created_at }]
+export async function adminGetPrenotazioni(lezioneId) {
+    const { data, error } = await supabase.rpc('admin_get_prenotazioni_lezione', {
+        p_lezione_id: lezioneId,
+    })
+    if (error) throw new Error('Impossibile caricare le prenotazioni')
+    return data
+}
